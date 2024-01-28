@@ -175,9 +175,9 @@ pub const STEP_LAST_OUTPUT: &str = r#"
 "#;
 
 pub const WINDOW_ACTIONS: phf::Map<&'static str, &'static str> = phf::phf_map! {
-    "getwindowname"         => "output_result(w.caption);",
+    "getwindowname"         => "output_result(w.caption);",  
     "getwindowclassname"    => "output_result(w.resourceClass);",
-    "getwindowgeometry"     => "output_result(`Window ${w.internalId}`); output_result(`  Position: ${w.x},${w.y}{{#if kde5}} (screen: ${window_screen(w)}){{/if}}`); output_result(`  Geometry: ${w.width}x${w.height}`);",
+    "getwindowgeometry"     => "{{#unless script}}output_result(`WindowID:${w.internalId}`);{{/unless}} output_result(`Position:[${w.x},${w.y}]`); {{#unless script}}{{#if kde5}}output_result(`screen:${window_screen(w)}`);{{/if}}{{/unless}} output_result(`Geometry:[${w.width},${w.height}]`);",
     "getwindowpid"          => "output_result(w.pid);",
     "windowminimize"        => "w.minimized = true;",
     "windowraise"           => "workspace_raiseWindow(w);",
@@ -223,6 +223,7 @@ pub const STEP_GLOBAL_ACTION: &str = r#"
 
 pub const GLOBAL_ACTIONS: phf::Map<&'static str, &'static str> = phf::phf_map! {
     "get_desktop"           => "output_result(workspace_currentDesktop());",
+    "getmouselocation"      => "output_result(`[${workspace.cursorPos.x},${workspace.cursorPos.y}]`)",
     "set_desktop"           => "workspace_setCurrentDesktop({{{n}}});",
     "get_num_desktops"           => "output_result(workspace_numDesktops());",
     "set_num_desktops"           => "workspace_setNumDesktops({{{n}}})",

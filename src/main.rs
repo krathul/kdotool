@@ -25,6 +25,7 @@ struct Globals {
     dbus_addr: String,
     cmdline: String,
     debug: bool,
+    script: bool,
     kde5: bool,
     marker: String,
     script_name: String,
@@ -582,6 +583,9 @@ fn main() -> anyhow::Result<()> {
             }
             Short('d') | Long("debug") => {
                 context.debug = true;
+            }
+            Long("script") => {
+                context.script = true;
             }
             Short('n') | Long("dry-run") => {
                 opt_dry_run = true;
